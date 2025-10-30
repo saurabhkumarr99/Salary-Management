@@ -137,12 +137,27 @@ public class EmployeeControllerTest {
 		Employee savedEmployee = objectMapper.readValue(responseBody, Employee.class);
 
 		// Step 2: Perform DELETE request to remove the employee
-		mockMvc.perform(delete(deleteEmpByIdUrl+ savedEmployee.getId())
-				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNoContent()); // HTTP 204
+		mockMvc.perform(delete(deleteEmpByIdUrl + savedEmployee.getId()).contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNoContent()); // HTTP 204
 
 		// Step 3: Verify that the employee is deleted from DB
 		mockMvc.perform(get(getEmpByIdUrl + savedEmployee.getId()).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNotFound()); // Expected 404
+	}
+
+	// Test to verify exception handeling when employe not found and to be deleted
+	@Test
+	void shouldReturnNotFoundWhenDeletingNonExistentEmployee() throws Exception {
+		// Step 1: Use a non-existing employee ID
+		Long nonExistentId = 999L;
+
+		// Step 2: Perform DELETE request for non-existent employee
+		mockMvc.perform(delete(deleteEmpByIdUrl + nonExistentId).contentType(MediaType.APPLICATION_JSON))
+				// Step 3: Expect 404 Not Found
+				.andExpect(status().isNotFound())
+				// Step 4: Validate the error message
+				.andExpect(jsonPath("$.message").value("Employee Not Found"))
+				.andExpect(jsonPath("$.errors[0]").value("Employee not found with ID: " + nonExistentId));
 	}
 
 }
