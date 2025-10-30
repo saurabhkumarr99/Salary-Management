@@ -73,5 +73,16 @@ public class EmployeeControllerTest {
 				.andExpect(jsonPath("$.jobTitle").value("Engineer")).andExpect(jsonPath("$.country").value("India"))
 				.andExpect(jsonPath("$.salary").value(80000.0));
 	}
+	
+	// Test case to verify employee not found exception
+	@Test
+	void shouldReturnNotFoundWhenEmployeeDoesNotExist() throws Exception {
+	    Long nonExistentId = 999L; // any ID not present in DB
+
+	    mockMvc.perform(get(getEmpByIdUrl + nonExistentId)
+	                    .contentType(MediaType.APPLICATION_JSON))
+	            .andExpect(status().isNotFound())
+	            .andExpect(content().string("Employee not found with ID: " + nonExistentId));
+	}
 
 }

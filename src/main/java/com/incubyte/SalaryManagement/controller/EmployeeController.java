@@ -32,7 +32,7 @@ public class EmployeeController {
 	}
 	
 	/**
-	 * @author saura
+	 * @author Saurah Rai
 	 * @apiNote Get employee by id
 	 * @param id
 	 * @return
