@@ -32,7 +32,7 @@ public class SalaryControllerTest {
 	String createEmpUrl = "/api/employeeService/createEmployee";
 	String calculateSalaryUrl = "/api/salaryService/calculateSalary/";
 	String salaryMetricsByCountryUrl = "/api/salaryService/getMetricsByCountry/";
-	String salaryMetricsByTileUrl = "/api/salaryService/getMetricsByTitle/";
+	String salaryMetricsByTileUrl = "/api/salaryService/getAvgSalryByTitle/";
 
 	@BeforeEach
 	void setUp() {

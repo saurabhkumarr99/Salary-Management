@@ -19,4 +19,8 @@ public interface SalaryRepository extends JpaRepository<Employee, Long> {
 
 	@Query("SELECT AVG(e.salary) FROM Employee e WHERE e.country = :country")
 	Double findAverageSalaryByCountry(@Param("country") String country);
+
+	// Get average salary by job title
+	@Query("SELECT AVG(e.salary) FROM Employee e WHERE e.jobTitle = :jobTitle")
+	Double findAverageSalaryByJobTitle(@Param("jobTitle") String jobTitle);
 }

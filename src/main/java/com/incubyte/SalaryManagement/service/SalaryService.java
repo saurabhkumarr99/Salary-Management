@@ -75,4 +75,17 @@ public class SalaryService {
 
 		return new SalaryMetricsDto(country, min, max, avg);
 	}
+
+	/**
+	 * @author Saurabh Rai
+	 * @apiNote Get average salary by job title
+	 * @param jobTitle
+	 * @return
+	 */
+	public SalaryMetricsDto getAverageSalaryByJobTitle(String jobTitle) {
+		Double avgSalary = salaryRepository.findAverageSalaryByJobTitle(jobTitle);
+
+		SalaryMetricsDto salaryMetricsDto = new SalaryMetricsDto(null, jobTitle, null, null, avgSalary);
+		return salaryMetricsDto;
+	}
 }

@@ -34,4 +34,11 @@ public class SalaryController {
 		SalaryMetricsDto metrics = salaryService.getSalaryMetricsByCountry(country);
 		return ResponseEntity.status(HttpStatus.OK).body(metrics);
 	}
+
+	// Get salary metrics by country
+	@GetMapping("getAvgSalryByTitle/{title}")
+	public ResponseEntity<SalaryMetricsDto> getAvgSalaryMetricsByTitle(@PathVariable String title) {
+		SalaryMetricsDto metrics = salaryService.getAverageSalaryByJobTitle(title);
+		return ResponseEntity.status(HttpStatus.OK).body(metrics);
+	}
 }

@@ -1,8 +1,12 @@
 package com.incubyte.SalaryManagement.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SalaryMetricsDto {
 
 	private String country;
+	private String jobTitle;
 	private Double minSalary;
 	private Double maxSalary;
 	private Double averageSalary;
@@ -15,6 +19,15 @@ public class SalaryMetricsDto {
 	public SalaryMetricsDto(String country, Double minSalary, Double maxSalary, Double averageSalary) {
 		super();
 		this.country = country;
+		this.minSalary = minSalary;
+		this.maxSalary = maxSalary;
+		this.averageSalary = averageSalary;
+	}
+
+	public SalaryMetricsDto(String country, String jobTitle, Double minSalary, Double maxSalary, Double averageSalary) {
+		super();
+		this.country = country;
+		this.jobTitle = jobTitle;
 		this.minSalary = minSalary;
 		this.maxSalary = maxSalary;
 		this.averageSalary = averageSalary;
@@ -52,10 +65,18 @@ public class SalaryMetricsDto {
 		this.averageSalary = averageSalary;
 	}
 
+	public String getJobTitle() {
+		return jobTitle;
+	}
+
+	public void setJobTitle(String jobTitle) {
+		this.jobTitle = jobTitle;
+	}
+
 	@Override
 	public String toString() {
-		return "SalaryMetricsDto [country=" + country + ", minSalary=" + minSalary + ", maxSalary=" + maxSalary
-				+ ", averageSalary=" + averageSalary + "]";
+		return "SalaryMetricsDto [country=" + country + ", jobTitle=" + jobTitle + ", minSalary=" + minSalary
+				+ ", maxSalary=" + maxSalary + ", averageSalary=" + averageSalary + "]";
 	}
 
 }
