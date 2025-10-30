@@ -2,6 +2,8 @@ package com.incubyte.SalaryManagement.controller;
 
 import com.incubyte.SalaryManagement.model.Employee;
 import com.incubyte.SalaryManagement.repository.EmployeeRepository;
+import com.incubyte.SalaryManagement.service.EmployeeService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +13,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/employeeService")
 public class EmployeeController {
 
+
 	@Autowired
-	private EmployeeRepository employeeRepository;
+	private EmployeeService employeeService;
 
 	/**
 	 * @author Saurabh Rai
@@ -22,7 +25,7 @@ public class EmployeeController {
 	 */
 	@PostMapping("/createEmployee")
 	public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
-		Employee savedEmployee = employeeRepository.save(employee);
+		Employee savedEmployee = employeeService.createEmployee(employee);
 		return ResponseEntity.status(HttpStatus.CREATED).body(savedEmployee);
 	}
 }
