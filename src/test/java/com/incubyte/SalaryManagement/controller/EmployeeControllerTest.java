@@ -27,6 +27,7 @@ public class EmployeeControllerTest {
 	String createEmpUrl = "/api/employeeService/createEmployee";
 	String getEmpByIdUrl = "/api/employeeService/getEmployeeById/";
 	String updateEmpByIdUrl = "/api/employeeService/updateEmployee/";
+	String deleteEmpByIdUrl = "/api/employeeService/deleteEmployee/";
 
 	// Test Create Employee
 	@Test
@@ -120,6 +121,28 @@ public class EmployeeControllerTest {
 		mockMvc.perform(put(updateEmpByIdUrl + nonExistentId).contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(updatedEmployee))).andExpect(status().isNotFound())
 				.andExpect(jsonPath("$.errors[0]").value("Employee not found with ID: " + nonExistentId));
+	}
+
+	// Test to verify deletion api
+	@Test
+	void shouldDeleteEmployeeByIdSuccessfully() throws Exception {
+		// Step 1: Create and save employee first
+		Employee employee = new Employee("John Doe", "Engineer", "India", 80000);
+		MvcResult result = mockMvc
+				.perform(post(createEmpUrl).contentType(MediaType.APPLICATION_JSON)
+						.content(objectMapper.writeValueAsString(employee)))
+				.andExpect(status().isCreated()).andReturn();
+
+		String responseBody = result.getResponse().getContentAsString();
+		Employee savedEmployee = objectMapper.readValue(responseBody, Employee.class);
+
+		// Step 2: Perform DELETE request to remove the employee
+		mockMvc.perform(delete(deleteEmpByIdUrl+ employee.getId())
+				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNoContent()); // HTTP 204
+
+		// Step 3: Verify that the employee is deleted from DB
+		mockMvc.perform(get(getEmpByIdUrl + savedEmployee.getId()).contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNotFound()); // Expected 404
 	}
 
 }

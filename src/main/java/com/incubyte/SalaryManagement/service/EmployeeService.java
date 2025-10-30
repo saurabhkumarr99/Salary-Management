@@ -39,7 +39,7 @@ public class EmployeeService {
 		// Update fields
 		updatedEmployee.setId(id);
 		
-		logger.info("Employee created successfully : " + updatedEmployee);
+		logger.info("Employee updated successfully : " + updatedEmployee);
 		return employeeRepository.save(updatedEmployee);
 	}
 }
