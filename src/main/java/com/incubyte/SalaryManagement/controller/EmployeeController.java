@@ -30,4 +30,16 @@ public class EmployeeController {
 		Employee savedEmployee = employeeService.createEmployee(employee);
 		return ResponseEntity.status(HttpStatus.CREATED).body(savedEmployee);
 	}
+	
+	/**
+	 * @author saura
+	 * @apiNote Get employee by id
+	 * @param id
+	 * @return
+	 */
+    @GetMapping("/getEmployeeById/{id}")
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
+        Employee employee = employeeService.getEmployeeById(id);
+        return ResponseEntity.ok(employee);
+    }
 }

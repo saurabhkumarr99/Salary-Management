@@ -25,7 +25,7 @@ public class EmployeeControllerTest {
 	private ObjectMapper objectMapper;
 
 	String createEmpUrl = "/api/employeeService/createEmployee";
-	String getEmpByIdUrl = "/api/employeeService/getEmployeeById";
+	String getEmpByIdUrl = "/api/employeeService/getEmployeeById/";
 
 	// Test Create Employee
 	@Test
@@ -51,32 +51,27 @@ public class EmployeeControllerTest {
 																											// failure
 	}
 
-	//Test case to verify fetching an employee by ID successfully.
+	// Test case to verify fetching an employee by ID successfully.
 	@Test
 	void shouldFetchEmployeeByIdSuccessfully() throws Exception {
-	    // Step 1: Create a new employee using the API
-	    Employee employee = new Employee("John Doe", "Engineer", "India", 80000);
+		// Step 1: Create a new employee using the API
+		Employee employee = new Employee("John Doe", "Engineer", "India", 80000);
 
-	    MvcResult result = mockMvc.perform(post(createEmpUrl)
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .content(objectMapper.writeValueAsString(employee)))
-	            .andExpect(status().isCreated())
-	            .andReturn();
+		MvcResult result = mockMvc
+				.perform(post(createEmpUrl).contentType(MediaType.APPLICATION_JSON)
+						.content(objectMapper.writeValueAsString(employee)))
+				.andExpect(status().isCreated()).andReturn();
 
-	    // Extract the created employee’s ID from the response
-	    String responseBody = result.getResponse().getContentAsString();
-	    Employee savedEmployee = objectMapper.readValue(responseBody, Employee.class);
+		String responseBody = result.getResponse().getContentAsString();
+		Employee savedEmployee = objectMapper.readValue(responseBody, Employee.class);
+		
+		// Step 2: Fetch employee by ID using GET
+		mockMvc.perform(get(getEmpByIdUrl + savedEmployee.getId()).contentType(MediaType.APPLICATION_JSON))
 
-	    // Step 2: Fetch employee by ID using GET
-	    mockMvc.perform(get(getEmpByIdUrl + savedEmployee.getId())
-	                    .contentType(MediaType.APPLICATION_JSON))
-
-	            // Step 3: Validate response
-	            .andExpect(status().isOk())
-	            .andExpect(jsonPath("$.fullName").value("John Doe"))
-	            .andExpect(jsonPath("$.jobTitle").value("Engineer"))
-	            .andExpect(jsonPath("$.country").value("India"))
-	            .andExpect(jsonPath("$.salary").value(80000.0));
+				// Step 3: Validate response
+				.andExpect(status().isOk()).andExpect(jsonPath("$.fullName").value("John Doe"))
+				.andExpect(jsonPath("$.jobTitle").value("Engineer")).andExpect(jsonPath("$.country").value("India"))
+				.andExpect(jsonPath("$.salary").value(80000.0));
 	}
-	
+
 }

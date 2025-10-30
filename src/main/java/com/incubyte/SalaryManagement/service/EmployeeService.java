@@ -15,12 +15,17 @@ public class EmployeeService {
 	@Autowired
 	EmployeeRepository employeeRepository;
 
-	 private static final Logger logger = LoggerFactory.getLogger(EmployeeService.class);
-	 
+	private static final Logger logger = LoggerFactory.getLogger(EmployeeService.class);
+
 	// Create Employee
 	public Employee createEmployee(@RequestBody Employee employee) {
-		
-		logger.info("Employee created successfully : "+employee);
+
+		logger.info("Employee created successfully : " + employee);
 		return employeeRepository.save(employee);
+	}
+
+	// Get employee by id
+	public Employee getEmployeeById(Long id) {
+		return employeeRepository.findById(id).orElse(null);
 	}
 }
