@@ -29,10 +29,10 @@ public class SalaryControllerTest {
 	@Autowired
 	private ObjectMapper objectMapper;
 
-	String createEmpUrl = "/api/employeeService/createEmployee";
-	String calculateSalaryUrl = "/api/salaryService/calculateSalary/";
-	String salaryMetricsByCountryUrl = "/api/salaryService/getMetricsByCountry/";
-	String salaryMetricsByTileUrl = "/api/salaryService/getAvgSalryByTitle/";
+	String createEmpUrl = "/api/v1/employeeService/createEmployee";
+	String calculateSalaryUrl = "/api/v1/salaryService/calculateSalary/";
+	String salaryMetricsByCountryUrl = "/api/v1/salaryService/getMetricsByCountry/";
+	String salaryMetricsByTileUrl = "/api/v1/salaryService/getAvgSalryByTitle/";
 
 	@BeforeEach
 	void setUp() {

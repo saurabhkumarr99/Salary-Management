@@ -13,7 +13,7 @@ import com.incubyte.SalaryManagement.dto.SalaryMetricsDto;
 import com.incubyte.SalaryManagement.service.SalaryService;
 
 @RestController
-@RequestMapping("/api/salaryService")
+@RequestMapping("/api/v1/salaryService")
 public class SalaryController {
 
 	@Autowired

@@ -16,9 +16,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import com.incubyte.SalaryManagement.dto.ErrorResponseDto;
 
 @RestControllerAdvice
-public class EmployeeGlobalExceptionHandler {
+public class GlobalExceptionHandler {
 
-	private static final Logger logger = LoggerFactory.getLogger(EmployeeGlobalExceptionHandler.class);
+	private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
 	// Handle global validation exceptions
 	@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -63,6 +63,17 @@ public class EmployeeGlobalExceptionHandler {
 				"Job Title not found", List.of(ex.getMessage()));
 		logger.error("Country not found: {}", ex.getMessage());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+	}
+
+	// Handle all other unexpected exceptions (fallback)
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<ErrorResponseDto> handleGlobalExceptions(Exception ex) {
+		logger.error("Unexpected exception occurred: {}", ex.getMessage(), ex);
+
+		ErrorResponseDto errorResponseDto = new ErrorResponseDto(LocalDateTime.now(), HttpStatus.INTERNAL_SERVER_ERROR.value(),
+				"Internal Server Error", List.of(ex.getMessage()));
+
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponseDto);
 	}
 
 }

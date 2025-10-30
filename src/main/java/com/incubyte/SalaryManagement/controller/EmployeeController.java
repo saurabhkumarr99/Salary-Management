@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/employeeService")
+@RequestMapping("/api/v1/employeeService")
 public class EmployeeController {
 
 	@Autowired

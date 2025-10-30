@@ -24,10 +24,10 @@ public class EmployeeControllerTest {
 	@Autowired
 	private ObjectMapper objectMapper;
 
-	String createEmpUrl = "/api/employeeService/createEmployee";
-	String getEmpByIdUrl = "/api/employeeService/getEmployeeById/";
-	String updateEmpByIdUrl = "/api/employeeService/updateEmployee/";
-	String deleteEmpByIdUrl = "/api/employeeService/deleteEmployee/";
+	String createEmpUrl = "/api/v1/employeeService/createEmployee";
+	String getEmpByIdUrl = "/api/v1/employeeService/getEmployeeById/";
+	String updateEmpByIdUrl = "/api/v1/employeeService/updateEmployee/";
+	String deleteEmpByIdUrl = "/api/v1/employeeService/deleteEmployee/";
 
 	// Test Create Employee
 	@Test
