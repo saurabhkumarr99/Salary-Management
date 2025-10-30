@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.incubyte.SalaryManagement.dto.SalaryBreakupDto;
+import com.incubyte.SalaryManagement.dto.SalaryMetricsDto;
 import com.incubyte.SalaryManagement.service.SalaryService;
 
 @RestController
@@ -25,5 +26,12 @@ public class SalaryController {
 		SalaryBreakupDto salaryBreakupDto = salaryService.calculateSalaryBreakup(id);
 
 		return ResponseEntity.status(HttpStatus.OK).body(salaryBreakupDto);
+	}
+
+	// Get salary metrics by country
+	@GetMapping("getMetricsByCountry/{country}")
+	public ResponseEntity<SalaryMetricsDto> getSalaryMetricsByCountry(@PathVariable String country) {
+		SalaryMetricsDto metrics = salaryService.getSalaryMetricsByCountry(country);
+		return ResponseEntity.status(HttpStatus.OK).body(metrics);
 	}
 }

@@ -7,15 +7,20 @@ import org.springframework.stereotype.Service;
 
 import com.incubyte.SalaryManagement.dto.EmployeeDto;
 import com.incubyte.SalaryManagement.dto.SalaryBreakupDto;
+import com.incubyte.SalaryManagement.dto.SalaryMetricsDto;
 import com.incubyte.SalaryManagement.exceptions.EmployeeNotFoundException;
 import com.incubyte.SalaryManagement.model.Employee;
 import com.incubyte.SalaryManagement.repository.EmployeeRepository;
+import com.incubyte.SalaryManagement.repository.SalaryRepository;
 
 @Service
 public class SalaryService {
 
 	@Autowired
 	EmployeeRepository employeeRepository;
+
+	@Autowired
+	SalaryRepository salaryRepository;
 
 	private static final Logger logger = LoggerFactory.getLogger(SalaryService.class);
 
@@ -49,5 +54,19 @@ public class SalaryService {
 		EmployeeDto employeeDto = new EmployeeDto(employee);
 
 		return new SalaryBreakupDto(employeeDto, gross, tds, net);
+	}
+
+	/**
+	 * @author Saurabh Rai
+	 * @apiNote Get salary metrics like min, max, average by country
+	 * @param country
+	 * @return
+	 */
+	public SalaryMetricsDto getSalaryMetricsByCountry(String country) {
+		Double min = salaryRepository.findMinSalaryByCountry(country);
+		Double max = salaryRepository.findMaxSalaryByCountry(country);
+		Double avg = salaryRepository.findAverageSalaryByCountry(country);
+
+		return new SalaryMetricsDto(country, min, max, avg);
 	}
 }
