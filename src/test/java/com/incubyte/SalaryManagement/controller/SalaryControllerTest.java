@@ -98,5 +98,19 @@ public class SalaryControllerTest {
 				.andExpect(jsonPath("$.jobTitle").value("Engineer"))
 				.andExpect(jsonPath("$.averageSalary").value(80000.0));
 	}
+	
+	// To test exception handeling when job not found
+	@Test
+	void shouldThrowExceptionWhenJobTitleDoesNotExist() throws Exception {
+	    // Step 1: Ensure no employee exists with the given job title
+	    String nonExistingTitle = "Astronaut";
+
+	    // Step 2: Perform GET request for a non-existent job title
+	    mockMvc.perform(get(salaryMetricsByTileUrl + nonExistingTitle)
+	            .contentType(MediaType.APPLICATION_JSON))
+	            .andExpect(status().isNotFound()) // Expect 404
+	            .andExpect(jsonPath("$.message").value("Job title not found: " + nonExistingTitle));
+	}
+
 
 }
