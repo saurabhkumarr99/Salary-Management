@@ -71,5 +71,19 @@ public class SalaryControllerTest {
 				.andExpect(jsonPath("$.maxSalary").value(120000.0))
 				.andExpect(jsonPath("$.averageSalary").value(100000.0));
 	}
+	
+	// To test exception handeling when country does not exsit
+	@Test
+	void shouldThrowExceptionWhenCountryDoesNotExist() throws Exception {
+	    // Step 1: Use a country not present in DB
+	    String nonExistentCountry = "Atlantis";
+
+	    // Step 2: Perform GET request to fetch salary metrics
+	    mockMvc.perform(get(salaryMetricsByCountryUrl + nonExistentCountry)
+	                    .contentType(MediaType.APPLICATION_JSON))
+	            // Step 3: Expect NOT_FOUND and message
+	            .andExpect(status().isNotFound())
+	            .andExpect(jsonPath("$.message").value("Country not found: " + nonExistentCountry));
+	}
 
 }
