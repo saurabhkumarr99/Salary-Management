@@ -38,8 +38,19 @@ public class EmployeeService {
 
 		// Update fields
 		updatedEmployee.setId(id);
-		
+
 		logger.info("Employee updated successfully : " + updatedEmployee);
 		return employeeRepository.save(updatedEmployee);
+	}
+
+	// Delete Employee by id
+	public Boolean deleteEmployeeById(Long id) {
+		if (!employeeRepository.existsById(id)) {
+			return false;
+		}
+
+		employeeRepository.deleteById(id);
+		logger.info("Employee deleted successfully with ID: {}", id);
+		return true;
 	}
 }

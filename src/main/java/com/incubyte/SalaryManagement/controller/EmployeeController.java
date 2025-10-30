@@ -54,4 +54,19 @@ public class EmployeeController {
 		Employee employee = employeeService.updateEmployee(id, updatedEmployee);
 		return ResponseEntity.status(HttpStatus.OK).body(employee);
 	}
+
+	/**
+	 * @author Saurabh Rai
+	 * @apiNote Delete employee by id
+	 * @param id
+	 * @return
+	 */
+	@DeleteMapping("/deleteEmployee/{id}")
+	public ResponseEntity<Void> deleteEmployeeById(@PathVariable Long id) {
+		Boolean status = employeeService.deleteEmployeeById(id);
+        if(!status) {
+        	return ResponseEntity.status(HttpStatus.BAD_GATEWAY).build();
+        }
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
 }

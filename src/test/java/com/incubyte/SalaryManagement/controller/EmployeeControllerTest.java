@@ -137,7 +137,7 @@ public class EmployeeControllerTest {
 		Employee savedEmployee = objectMapper.readValue(responseBody, Employee.class);
 
 		// Step 2: Perform DELETE request to remove the employee
-		mockMvc.perform(delete(deleteEmpByIdUrl+ employee.getId())
+		mockMvc.perform(delete(deleteEmpByIdUrl+ savedEmployee.getId())
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNoContent()); // HTTP 204
 
 		// Step 3: Verify that the employee is deleted from DB
