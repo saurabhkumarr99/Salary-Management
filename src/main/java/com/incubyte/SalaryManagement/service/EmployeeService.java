@@ -30,4 +30,13 @@ public class EmployeeService {
 		return employeeRepository.findById(id)
 				.orElseThrow(() -> new EmployeeNotFoundException("Employee not found with ID: " + id));
 	}
+
+	// Update employee by id
+	public Employee updateEmployee(Long id, Employee updatedEmployee) {
+		Employee existingEmployee = employeeRepository.findById(id).get();
+
+		// Update fields
+		updatedEmployee.setId(id);
+		return employeeRepository.save(updatedEmployee);
+	}
 }

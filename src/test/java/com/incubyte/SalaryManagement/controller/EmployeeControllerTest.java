@@ -96,12 +96,13 @@ public class EmployeeControllerTest {
 				.andExpect(status().isCreated()).andReturn();
 
 		String responseBody = result.getResponse().getContentAsString();
+		Employee savedEmployee = objectMapper.readValue(responseBody, Employee.class);
 
 		// Step 2: Prepare updated data
 		Employee updatedEmployee = new Employee("John Updated", "Senior Engineer", "India", 90000);
 
 		// Step 3: Perform PUT request
-		mockMvc.perform(put(updateEmpByIdUrl + employee.getId()).contentType(MediaType.APPLICATION_JSON)
+		mockMvc.perform(put(updateEmpByIdUrl + savedEmployee.getId()).contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(updatedEmployee))).andExpect(status().isOk())
 				.andExpect(jsonPath("$.fullName").value("John Updated"))
 				.andExpect(jsonPath("$.jobTitle").value("Senior Engineer"))
