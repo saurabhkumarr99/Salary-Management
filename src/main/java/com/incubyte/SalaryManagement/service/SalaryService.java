@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.incubyte.SalaryManagement.dto.EmployeeDto;
 import com.incubyte.SalaryManagement.dto.SalaryBreakupDto;
 import com.incubyte.SalaryManagement.dto.SalaryMetricsDto;
+import com.incubyte.SalaryManagement.exceptions.CountryNotFoundException;
 import com.incubyte.SalaryManagement.exceptions.EmployeeNotFoundException;
 import com.incubyte.SalaryManagement.model.Employee;
 import com.incubyte.SalaryManagement.repository.EmployeeRepository;
@@ -66,6 +67,11 @@ public class SalaryService {
 		Double min = salaryRepository.findMinSalaryByCountry(country);
 		Double max = salaryRepository.findMaxSalaryByCountry(country);
 		Double avg = salaryRepository.findAverageSalaryByCountry(country);
+
+		if (min == null || max == null || avg == null) {
+			logger.warn("No employees found for country: {}", country);
+			throw new CountryNotFoundException("No employees found for country: " + country);
+		}
 
 		return new SalaryMetricsDto(country, min, max, avg);
 	}

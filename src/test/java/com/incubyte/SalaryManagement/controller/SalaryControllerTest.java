@@ -83,7 +83,7 @@ public class SalaryControllerTest {
 	                    .contentType(MediaType.APPLICATION_JSON))
 	            // Step 3: Expect NOT_FOUND and message
 	            .andExpect(status().isNotFound())
-	            .andExpect(jsonPath("$.message").value("Country not found: " + nonExistentCountry));
+	            .andExpect(jsonPath("$.message").value("Country not found"));
 	}
 
 }

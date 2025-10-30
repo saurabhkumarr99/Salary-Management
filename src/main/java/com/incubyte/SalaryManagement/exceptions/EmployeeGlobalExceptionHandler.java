@@ -43,4 +43,18 @@ public class EmployeeGlobalExceptionHandler {
 		logger.error("Employee not found: {}", ex.getMessage());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDto);
 	}
+	
+	// Handle global country not found exception
+	@ExceptionHandler(CountryNotFoundException.class)
+	public ResponseEntity<ErrorResponseDto> handleCountryNotFound(CountryNotFoundException ex) {
+		
+	    ErrorResponseDto errorResponse = new ErrorResponseDto(
+	            LocalDateTime.now(),
+	            HttpStatus.NOT_FOUND.value(),
+	            "Country not found",
+	            List.of(ex.getMessage())
+	    );
+	    logger.error("Country not found: {}", ex.getMessage());
+	    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+	}
 }
