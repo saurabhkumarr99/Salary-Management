@@ -128,6 +128,7 @@ com.incubyte.SalaryManagement
 - `shouldReturnAverageSalaryByJobTitle()` — Verify avg salary by job title  
 - `shouldThrowExceptionWhenJobTitleDoesNotExist()` — Handle missing job title  
 
+
 ![HLD](img.png)  
 *Test Cases*
 ---
@@ -136,7 +137,7 @@ com.incubyte.SalaryManagement
 
 ### 🌀 Clone the Repository
 ```bash
-git clone https://github.com/yourusername/SalaryManagement.git
+git clone https://github.com/saurabhkumarr99/Salary-Management
 cd SalaryManagement
 ```
 🏗️ Build and Run the Application
