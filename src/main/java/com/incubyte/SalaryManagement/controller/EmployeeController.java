@@ -1,6 +1,5 @@
 package com.incubyte.SalaryManagement.controller;
 
-import com.incubyte.SalaryManagement.exceptions.EmployeeNotFoundException;
 import com.incubyte.SalaryManagement.model.Employee;
 import com.incubyte.SalaryManagement.repository.EmployeeRepository;
 import com.incubyte.SalaryManagement.service.EmployeeService;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/employeeService")
 public class EmployeeController {
 
-
 	@Autowired
 	private EmployeeService employeeService;
 
@@ -27,26 +25,20 @@ public class EmployeeController {
 	 * @return
 	 */
 	@PostMapping("/createEmployee")
-	public ResponseEntity<Employee> createEmployee(@Valid  @RequestBody Employee employee) {
+	public ResponseEntity<Employee> createEmployee(@Valid @RequestBody Employee employee) {
 		Employee savedEmployee = employeeService.createEmployee(employee);
 		return ResponseEntity.status(HttpStatus.CREATED).body(savedEmployee);
 	}
-	
+
 	/**
 	 * @author Saurah Rai
 	 * @apiNote Get employee by id
 	 * @param id
 	 * @return
 	 */
-    @GetMapping("/getEmployeeById/{id}")
-    public ResponseEntity<?> getEmployeeById(@PathVariable Long id) {
-        Employee employee = null;
-		try {
-			employee = employeeService.getEmployeeById(id);
-		} catch (EmployeeNotFoundException e) {
-			// TODO Auto-generated catch block
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee not found with ID: " + id);
-		}
-        return ResponseEntity.ok(employee);
-    }
+	@GetMapping("/getEmployeeById/{id}")
+	public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
+		Employee employee = employeeService.getEmployeeById(id);
+		return ResponseEntity.status(HttpStatus.OK).body(employee);
+	}
 }

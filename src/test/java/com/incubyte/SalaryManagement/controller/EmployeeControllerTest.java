@@ -82,7 +82,7 @@ public class EmployeeControllerTest {
 	    mockMvc.perform(get(getEmpByIdUrl + nonExistentId)
 	                    .contentType(MediaType.APPLICATION_JSON))
 	            .andExpect(status().isNotFound())
-	            .andExpect(content().string("Employee not found with ID: " + nonExistentId));
+	            .andExpect(jsonPath("$.errors[0]").value("Employee not found with ID: " + nonExistentId));
 	}
 
 }

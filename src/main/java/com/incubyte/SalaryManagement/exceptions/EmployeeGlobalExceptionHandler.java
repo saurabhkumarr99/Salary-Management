@@ -19,6 +19,7 @@ public class EmployeeGlobalExceptionHandler {
 
 	private static final Logger logger = LoggerFactory.getLogger(EmployeeGlobalExceptionHandler.class);
 
+	// Handle global validation exceptions
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ErrorResponseDto> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
 		List<String> errors = ex.getBindingResult().getFieldErrors().stream()
@@ -30,5 +31,16 @@ public class EmployeeGlobalExceptionHandler {
 		logger.error("Validation failed: {}", errors);
 
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponseDto);
+	}
+
+	// Handle global employee not found exceptions
+	@ExceptionHandler(EmployeeNotFoundException.class)
+	public ResponseEntity<ErrorResponseDto> handleEmployeeNotFound(EmployeeNotFoundException ex) {
+
+		ErrorResponseDto errorResponseDto = new ErrorResponseDto(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(),
+				"Employee Not Found", List.of(ex.getMessage()));
+
+		logger.error("Employee not found: {}", ex.getMessage());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDto);
 	}
 }
