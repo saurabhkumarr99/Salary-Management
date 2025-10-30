@@ -25,7 +25,7 @@ public class SalaryControllerTest {
 	private ObjectMapper objectMapper;
 
 	String createEmpUrl = "/api/employeeService/createEmployee";
-	String calculateSalaryUrl = "/api/employeeService/calculateSalary/";
+	String calculateSalaryUrl = "/api/salaryService/calculateSalary/";
 
 	// To test whether salary is calculated or not
 	@Test
