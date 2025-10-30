@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.incubyte.SalaryManagement.exceptions.EmployeeNotFoundException;
 import com.incubyte.SalaryManagement.model.Employee;
 import com.incubyte.SalaryManagement.repository.EmployeeRepository;
 
@@ -26,6 +27,7 @@ public class EmployeeService {
 
 	// Get employee by id
 	public Employee getEmployeeById(Long id) {
-		return employeeRepository.findById(id).orElse(null);
+		return employeeRepository.findById(id)
+				.orElseThrow(() -> new EmployeeNotFoundException("Employee not found with ID: " + id));
 	}
 }

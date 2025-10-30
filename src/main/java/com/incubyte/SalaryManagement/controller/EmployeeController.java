@@ -1,5 +1,6 @@
 package com.incubyte.SalaryManagement.controller;
 
+import com.incubyte.SalaryManagement.exceptions.EmployeeNotFoundException;
 import com.incubyte.SalaryManagement.model.Employee;
 import com.incubyte.SalaryManagement.repository.EmployeeRepository;
 import com.incubyte.SalaryManagement.service.EmployeeService;
@@ -38,8 +39,14 @@ public class EmployeeController {
 	 * @return
 	 */
     @GetMapping("/getEmployeeById/{id}")
-    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
-        Employee employee = employeeService.getEmployeeById(id);
+    public ResponseEntity<?> getEmployeeById(@PathVariable Long id) {
+        Employee employee = null;
+		try {
+			employee = employeeService.getEmployeeById(id);
+		} catch (EmployeeNotFoundException e) {
+			// TODO Auto-generated catch block
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee not found with ID: " + id);
+		}
         return ResponseEntity.ok(employee);
     }
 }
