@@ -1,7 +1,6 @@
 package com.incubyte.SalaryManagement.controller;
 
 import com.incubyte.SalaryManagement.model.Employee;
-import com.incubyte.SalaryManagement.repository.EmployeeRepository;
 import com.incubyte.SalaryManagement.service.EmployeeService;
 
 import jakarta.validation.Valid;
