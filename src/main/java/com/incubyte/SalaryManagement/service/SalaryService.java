@@ -10,6 +10,7 @@ import com.incubyte.SalaryManagement.dto.SalaryBreakupDto;
 import com.incubyte.SalaryManagement.dto.SalaryMetricsDto;
 import com.incubyte.SalaryManagement.exceptions.CountryNotFoundException;
 import com.incubyte.SalaryManagement.exceptions.EmployeeNotFoundException;
+import com.incubyte.SalaryManagement.exceptions.JobTitleNotFoundException;
 import com.incubyte.SalaryManagement.model.Employee;
 import com.incubyte.SalaryManagement.repository.EmployeeRepository;
 import com.incubyte.SalaryManagement.repository.SalaryRepository;
@@ -84,6 +85,10 @@ public class SalaryService {
 	 */
 	public SalaryMetricsDto getAverageSalaryByJobTitle(String jobTitle) {
 		Double avgSalary = salaryRepository.findAverageSalaryByJobTitle(jobTitle);
+
+		if (avgSalary == null) {
+			throw new JobTitleNotFoundException("Job title not found: " + jobTitle);
+		}
 
 		SalaryMetricsDto salaryMetricsDto = new SalaryMetricsDto(null, jobTitle, null, null, avgSalary);
 		return salaryMetricsDto;

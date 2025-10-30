@@ -109,7 +109,7 @@ public class SalaryControllerTest {
 	    mockMvc.perform(get(salaryMetricsByTileUrl + nonExistingTitle)
 	            .contentType(MediaType.APPLICATION_JSON))
 	            .andExpect(status().isNotFound()) // Expect 404
-	            .andExpect(jsonPath("$.message").value("Job title not found: " + nonExistingTitle));
+	            .andExpect(jsonPath("$.errors[0]").value("Job title not found: " + nonExistingTitle));
 	}
 
 

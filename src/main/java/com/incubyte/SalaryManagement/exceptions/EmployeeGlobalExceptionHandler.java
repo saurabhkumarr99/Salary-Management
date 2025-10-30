@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import com.incubyte.SalaryManagement.dto.ErrorResponseDto;
@@ -43,18 +44,25 @@ public class EmployeeGlobalExceptionHandler {
 		logger.error("Employee not found: {}", ex.getMessage());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDto);
 	}
-	
+
 	// Handle global country not found exception
 	@ExceptionHandler(CountryNotFoundException.class)
 	public ResponseEntity<ErrorResponseDto> handleCountryNotFound(CountryNotFoundException ex) {
-		
-	    ErrorResponseDto errorResponse = new ErrorResponseDto(
-	            LocalDateTime.now(),
-	            HttpStatus.NOT_FOUND.value(),
-	            "Country not found",
-	            List.of(ex.getMessage())
-	    );
-	    logger.error("Country not found: {}", ex.getMessage());
-	    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+
+		ErrorResponseDto errorResponse = new ErrorResponseDto(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(),
+				"Country not found", List.of(ex.getMessage()));
+		logger.error("Country not found: {}", ex.getMessage());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
 	}
+
+	// Handle global job title not found exception
+	@ExceptionHandler(JobTitleNotFoundException.class)
+	public ResponseEntity<ErrorResponseDto> handleJobTitleNotFound(JobTitleNotFoundException ex) {
+
+		ErrorResponseDto errorResponse = new ErrorResponseDto(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(),
+				"Job Title not found", List.of(ex.getMessage()));
+		logger.error("Country not found: {}", ex.getMessage());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+	}
+
 }
