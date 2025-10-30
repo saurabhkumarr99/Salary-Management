@@ -32,6 +32,7 @@ public class SalaryControllerTest {
 	String createEmpUrl = "/api/employeeService/createEmployee";
 	String calculateSalaryUrl = "/api/salaryService/calculateSalary/";
 	String salaryMetricsByCountryUrl = "/api/salaryService/getMetricsByCountry/";
+	String salaryMetricsByTileUrl = "/api/salaryService/getMetricsByTitle/";
 
 	@BeforeEach
 	void setUp() {
@@ -71,19 +72,31 @@ public class SalaryControllerTest {
 				.andExpect(jsonPath("$.maxSalary").value(120000.0))
 				.andExpect(jsonPath("$.averageSalary").value(100000.0));
 	}
-	
+
 	// To test exception handeling when country does not exsit
 	@Test
 	void shouldThrowExceptionWhenCountryDoesNotExist() throws Exception {
-	    // Step 1: Use a country not present in DB
-	    String nonExistentCountry = "Atlantis";
+		// Step 1: Use a country not present in DB
+		String nonExistentCountry = "Atlantis";
 
-	    // Step 2: Perform GET request to fetch salary metrics
-	    mockMvc.perform(get(salaryMetricsByCountryUrl + nonExistentCountry)
-	                    .contentType(MediaType.APPLICATION_JSON))
-	            // Step 3: Expect NOT_FOUND and message
-	            .andExpect(status().isNotFound())
-	            .andExpect(jsonPath("$.message").value("Country not found"));
+		// Step 2: Perform GET request to fetch salary metrics
+		mockMvc.perform(get(salaryMetricsByCountryUrl + nonExistentCountry).contentType(MediaType.APPLICATION_JSON))
+				// Step 3: Expect NOT_FOUND and message
+				.andExpect(status().isNotFound()).andExpect(jsonPath("$.message").value("Country not found"));
+	}
+
+	// To test average salary by title
+	@Test
+	void shouldReturnAverageSalaryByJobTitle() throws Exception {
+		// Step 1: Add employees
+		employeeRepository.save(new Employee("Alice", "Engineer", "India", 70000.0));
+		employeeRepository.save(new Employee("Bob", "Engineer", "US", 90000.0));
+		employeeRepository.save(new Employee("Charlie", "Manager", "India", 120000.0));
+
+		// Step 2: Fetch metrics by job title
+		mockMvc.perform(get(salaryMetricsByTileUrl + "Engineer")).andExpect(status().isOk())
+				.andExpect(jsonPath("$.jobTitle").value("Engineer"))
+				.andExpect(jsonPath("$.averageSalary").value(80000.0));
 	}
 
 }
