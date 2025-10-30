@@ -46,7 +46,7 @@ public class EmployeeService {
 	// Delete Employee by id
 	public Boolean deleteEmployeeById(Long id) {
 		if (!employeeRepository.existsById(id)) {
-			return false;
+			throw new EmployeeNotFoundException("Employee not found with ID: " + id);
 		}
 
 		employeeRepository.deleteById(id);

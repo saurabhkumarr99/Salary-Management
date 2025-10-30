@@ -63,10 +63,7 @@ public class EmployeeController {
 	 */
 	@DeleteMapping("/deleteEmployee/{id}")
 	public ResponseEntity<Void> deleteEmployeeById(@PathVariable Long id) {
-		Boolean status = employeeService.deleteEmployeeById(id);
-        if(!status) {
-        	return ResponseEntity.status(HttpStatus.BAD_GATEWAY).build();
-        }
+		employeeService.deleteEmployeeById(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 }
