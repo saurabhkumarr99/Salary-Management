@@ -2,6 +2,7 @@ package com.incubyte.SalaryManagement.dto;
 
 public class SalaryBreakupDto {
 
+	private EmployeeDto employeeDto;
 	private double grossSalary;
 	private double tds;
 	private double netSalary;
@@ -11,8 +12,9 @@ public class SalaryBreakupDto {
 		// TODO Auto-generated constructor stub
 	}
 
-	public SalaryBreakupDto(double grossSalary, double tds, double netSalary) {
+	public SalaryBreakupDto(EmployeeDto employeeDto, double grossSalary, double tds, double netSalary) {
 		super();
+		this.employeeDto = employeeDto;
 		this.grossSalary = grossSalary;
 		this.tds = tds;
 		this.netSalary = netSalary;
@@ -42,9 +44,18 @@ public class SalaryBreakupDto {
 		this.netSalary = netSalary;
 	}
 
+	public EmployeeDto getEmployeeDto() {
+		return employeeDto;
+	}
+
+	public void setEmployeeDto(EmployeeDto employeeDto) {
+		this.employeeDto = employeeDto;
+	}
+
 	@Override
 	public String toString() {
-		return "SalaryBreakupDto [grossSalary=" + grossSalary + ", tds=" + tds + ", netSalary=" + netSalary + "]";
+		return "SalaryBreakupDto [employeeDto=" + employeeDto + ", grossSalary=" + grossSalary + ", tds=" + tds
+				+ ", netSalary=" + netSalary + "]";
 	}
 
 }

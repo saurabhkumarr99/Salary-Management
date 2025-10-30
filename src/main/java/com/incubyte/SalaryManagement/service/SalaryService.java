@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.incubyte.SalaryManagement.dto.EmployeeDto;
 import com.incubyte.SalaryManagement.dto.SalaryBreakupDto;
 import com.incubyte.SalaryManagement.exceptions.EmployeeNotFoundException;
 import com.incubyte.SalaryManagement.model.Employee;
@@ -44,6 +45,9 @@ public class SalaryService {
 		}
 
 		double net = gross - tds;
-		return new SalaryBreakupDto(gross, tds, net);
+
+		EmployeeDto employeeDto = new EmployeeDto(employee);
+
+		return new SalaryBreakupDto(employeeDto, gross, tds, net);
 	}
 }
