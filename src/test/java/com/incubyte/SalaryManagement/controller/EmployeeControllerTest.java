@@ -109,4 +109,17 @@ public class EmployeeControllerTest {
 				.andExpect(jsonPath("$.salary").value(90000.0));
 	}
 
+	// Test to verify whether employee not found exception occur when update non
+	// exist employee
+	@Test
+	void shouldReturnNotFoundWhenUpdatingNonExistingEmployee() throws Exception {
+		Long nonExistentId = 999L; // ID that doesn't exist
+
+		Employee updatedEmployee = new Employee("Jane Doe", "Manager", "USA", 120000);
+
+		mockMvc.perform(put(updateEmpByIdUrl + nonExistentId).contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(updatedEmployee))).andExpect(status().isNotFound())
+				.andExpect(jsonPath("$.errors[0]").value("Employee not found with ID: " + nonExistentId));
+	}
+
 }
