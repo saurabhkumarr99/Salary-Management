@@ -6,6 +6,7 @@ import java.util.List;
 public class ErrorResponseDto {
 
 	private LocalDateTime timestamp;
+	private String requestId;
 	private int status;
 	private String message;
 	private List<String> errors;
@@ -15,9 +16,11 @@ public class ErrorResponseDto {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ErrorResponseDto(LocalDateTime timestamp, int status, String message, List<String> errors) {
+	public ErrorResponseDto(LocalDateTime timestamp, String requestId, int status, String message,
+			List<String> errors) {
 		super();
 		this.timestamp = timestamp;
+		this.requestId = requestId;
 		this.status = status;
 		this.message = message;
 		this.errors = errors;
@@ -55,10 +58,18 @@ public class ErrorResponseDto {
 		this.errors = errors;
 	}
 
+	public String getRequestId() {
+		return requestId;
+	}
+
+	public void setRequestId(String requestId) {
+		this.requestId = requestId;
+	}
+
 	@Override
 	public String toString() {
-		return "ErrorResponseDto [timestamp=" + timestamp + ", status=" + status + ", message=" + message + ", errors="
-				+ errors + "]";
+		return "ErrorResponseDto [timestamp=" + timestamp + ", requestId=" + requestId + ", status=" + status
+				+ ", message=" + message + ", errors=" + errors + "]";
 	}
 
 }
